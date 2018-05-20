@@ -32,7 +32,7 @@ def bus_id(x):
 
 @app.route('/getpath/<x>')
 def getpath(x):
-    with open(root_data_dir+'geojson'+'/route'+x+'.geojson') as f:
+    with open(dbhelper.root_data_dir+'bus_lines/geojson'+'/route'+x+'.geojson') as f:
         return json.dumps(json.load(f))
 
 def main(arg):
@@ -41,4 +41,5 @@ def main(arg):
 
 if __name__ == "__main__":
     app.run()
+#    dbhelper.importdata(mongodb_connection)
 #    main(sys.argv)
