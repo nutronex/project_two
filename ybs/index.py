@@ -10,22 +10,22 @@ import dbhelper
 
 app = Flask(__name__)
 app.config['DEBUG'] = config.DEBUG
-mongodb_connection = pymongo.MongoClient(config.MONGODB_HOST,config.MONGODB_PORT)
+mongodb_connection = dbhelper.mongodb_connection
 
 @app.route("/")
-@dbhelper.initialize_data(mongodb_connection)
+@dbhelper.initialize_data
 def index():
     bus_lines = [ x['bus_id'] for x in mongodb_connection.ybs.buslines.find({},{'bus_id':1}) ]
     bus_stops = [ "%s"%x['name']   for x in mongodb_connection.ybs.bus_stops.find({},{'name':1})  ]
     return render_template('index.html',bus_lines=bus_lines , bus_stops = bus_stops)
 
 @app.route('/bus_stop/<path:x>')
-@dbhelper.initialize_data(mongodb_connection)
+@dbhelper.initialize_data
 def bus_stop_id(x):
     return json.dumps(mongodb_connection.ybs.bus_stops.find_one({'name':x},{'_id':0}))
 
 @app.route('/bus/<int:x>')
-@dbhelper.initialize_data(mongodb_connection)
+@dbhelper.initialize_data
 def bus_id(x):
     return json.dumps(mongodb_connection.ybs.buslines.find_one({'bus_id':x},{ '_id':0}))
 
