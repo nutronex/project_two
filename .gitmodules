@@ -1,0 +1,3 @@
+[submodule "Yangon-Bus-Data"]
+	path = Yangon-Bus-Data
+	url = https://github.com/vincent-paing/Yangon-Bus-Data
