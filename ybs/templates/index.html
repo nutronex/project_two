@@ -1,0 +1,74 @@
+<html>
+<head><title>ybs foo</title></head>
+<link rel='stylesheet' href="{{url_for('static',filename='x.css')}}"/>
+<link rel='stylesheet' href="{{url_for('static',filename='bootstrap.min.css')}}"/>
+<script type="text/javascript" src="{{url_for('static',filename='jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='vue.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='axios.min.js')}}"></script>
+<body>
+<style>
+active{display:block}
+not_active{display:none}
+li{cursor:pointer;}
+</style>
+
+<nav class="navbar navbar-default navbar-fixed-top" style="color:#00aeff">
+    <div class="navbar-header"><a class="navbar-brand" href="/">YBS</a></div>
+</nav>
+
+<div class="container" style="margin-top:10%">
+<div  class="row" id="test">
+<div class="col-sm-9" id="gmap" style="height:80%;"></div>
+<div  class="col-sm-3" id="left-side-panel" style= "">
+    <div  id="left-side-main-panel" style="">
+        <ul class="nav nav-tabs" style="background:#5f5f5f">
+            <li class="active"><a data-toggle="tab" href='#bline' >Bus Lines</a></li>
+            <li ><a data-toggle="tab" href="#bstop" >Bus Stops</a></li>
+        </ul>
+        <div  class="tab-content" style="height:100% ;overflow:scroll">
+            <div class="tab-pane active fade in" id="bline"     >
+                <ul style="list-style-type:none" class="list-group" v-for="x in buslines"> 
+                    <li class="list-group-item" v-on:click='bus_line_callback(x)'> ${x} </li></ul>
+            </div>
+            <div  id="bstop" class="tab-pane fade "        >
+                <ul style="list-style-type:none" v-for="x in busstops" class="list-group">
+                    <li  class="list-group-item" v-on:click='bus_stop_callback(x)'> ${x} </li></ul>
+            </div>
+        </div>
+    </div>
+
+    <div  id="left-side-sub-panel" style="height:100%;overflow:scroll;display:none;padding-top:10px">
+        <button type='btn' class='btn' v-on:click="toggle_side" >< back</button>
+        <hr>
+        <div v-if="show_bus_stop">
+            <h4 > ${cbdata['name']}</h4>
+            <h2 > bus line list</h2>
+            <ul class="list-group" v-for="x in cbdata['bus_ids']">
+                <li class="list-group-item"> ${x}</li>
+            </ul>
+            
+        </div>
+        <div v-if="show_bus_line">
+            <h2 > bus stop list</h2>
+            <ul class="list-group" v-for="x in cbdata['bus_stops']">
+                <li class="list-group-item"> ${x}</li>
+            </ul>
+        </div>
+
+    </div>
+
+</div>
+</div>
+</div>
+
+</body>
+<script>
+var bus_lines ={{bus_lines}};
+var bus_stops ={{bus_stops|tojson}}
+</script>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJhaNHU4l6JNCu1o-BupqWUWr8M_jbfDQ&callback=googlemap"></script>
+<script type="text/javascript" src="{{url_for('static',filename='app.js')}}"></script>
+</html>
